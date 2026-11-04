@@ -12,7 +12,7 @@ on:
 
 env:
   # エクスポートされたXcodeプロジェクトのルートディレクトリ（リポジトリルートにある場合は "."）
-  XCODE_PROJECT_DIR: "."
+  XCODE_PROJECT_DIR: "./unity_4"
   # Unityのデフォルトスキーム名
   SCHEME_NAME: "Unity-iPhone"
   # ビルド構成 (Release / Debug / ReleaseForRunning / ReleaseForProfiling)
