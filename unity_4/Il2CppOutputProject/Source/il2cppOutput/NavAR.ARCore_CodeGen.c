@@ -1,0 +1,53 @@
+﻿#include "pch-c.h"
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+extern void ArCoreGeoPoseSource_get_Vps_m6C8DED9689BC2F908E307458034471F27C6F1683 (void);
+extern void ArCoreGeoPoseSource_set_Vps_m88037F8CCE82A8C166B8497CA0075CC46530B243 (void);
+extern void ArCoreGeoPoseSource_get_StatusText_m2C0FFA3A0F8081EB61308FE01D9B1E0D1ED706B9 (void);
+extern void ArCoreGeoPoseSource_Start_m250FDC642AA34A9FFE8A44C470F1054230D1599B (void);
+extern void ArCoreGeoPoseSource_OnDestroy_m5E1D4A69A174EA2E597FC3085DE0397DB3430809 (void);
+extern void ArCoreGeoPoseSource_TryGetPose_mFB58C564E53D41AA0322EE37DB532AABB12B6773 (void);
+extern void ArCoreGeoPoseSource__ctor_m904478628DEFC30957248B77E61E5DDCAAA5EA41 (void);
+extern void U3CStartU3Ed__10__ctor_mA14EBCF642D7703D4BB9C9751909109144C482D6 (void);
+extern void U3CStartU3Ed__10_System_IDisposable_Dispose_mA4D745B7E0FB011C7FEF78EDD219AEE15531799A (void);
+extern void U3CStartU3Ed__10_MoveNext_m0C9BE8B0446B63A7D8290B819DCDAA9EEF26668F (void);
+extern void U3CStartU3Ed__10_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mC408910B7EEE175E9AD53F3999B566FF17879ACA (void);
+extern void U3CStartU3Ed__10_System_Collections_IEnumerator_Reset_mBA67D0F0EC1A27074DA1DF297D2358F19D33E5C0 (void);
+extern void U3CStartU3Ed__10_System_Collections_IEnumerator_get_Current_m69118E2485915DA9B01F483C7501A97B802E0B0E (void);
+static Il2CppMethodPointer s_methodPointers[13] = 
+{
+	ArCoreGeoPoseSource_get_Vps_m6C8DED9689BC2F908E307458034471F27C6F1683,
+	ArCoreGeoPoseSource_set_Vps_m88037F8CCE82A8C166B8497CA0075CC46530B243,
+	ArCoreGeoPoseSource_get_StatusText_m2C0FFA3A0F8081EB61308FE01D9B1E0D1ED706B9,
+	ArCoreGeoPoseSource_Start_m250FDC642AA34A9FFE8A44C470F1054230D1599B,
+	ArCoreGeoPoseSource_OnDestroy_m5E1D4A69A174EA2E597FC3085DE0397DB3430809,
+	ArCoreGeoPoseSource_TryGetPose_mFB58C564E53D41AA0322EE37DB532AABB12B6773,
+	ArCoreGeoPoseSource__ctor_m904478628DEFC30957248B77E61E5DDCAAA5EA41,
+	U3CStartU3Ed__10__ctor_mA14EBCF642D7703D4BB9C9751909109144C482D6,
+	U3CStartU3Ed__10_System_IDisposable_Dispose_mA4D745B7E0FB011C7FEF78EDD219AEE15531799A,
+	U3CStartU3Ed__10_MoveNext_m0C9BE8B0446B63A7D8290B819DCDAA9EEF26668F,
+	U3CStartU3Ed__10_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mC408910B7EEE175E9AD53F3999B566FF17879ACA,
+	U3CStartU3Ed__10_System_Collections_IEnumerator_Reset_mBA67D0F0EC1A27074DA1DF297D2358F19D33E5C0,
+	U3CStartU3Ed__10_System_Collections_IEnumerator_get_Current_m69118E2485915DA9B01F483C7501A97B802E0B0E,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_NavAR_ARCore_CodeGenModule;
+const Il2CppCodeGenModule g_NavAR_ARCore_CodeGenModule = 
+{
+	"NavAR.ARCore.dll",
+	13,
+	s_methodPointers,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
