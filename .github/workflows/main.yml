@@ -57,6 +57,7 @@ jobs:
           xattr -l ./usymtool
           # codesign -dv --verbose=4 ./usymtool
           df -h
+          cat /Users/runner/work/_temp/DerivedData/Build/Intermediates.noindex/Unity-iPhone.build/Release-iphoneos/UnityFramework.build/Script-6E1E4F1B8F1F395756E8C231.sh
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
         run: |
