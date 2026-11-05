@@ -49,14 +49,7 @@ jobs:
           if [ -f "Podfile" ] && [ ! -d "Pods" ]; then
             pod install --repo-update
           fi
-      - name: Diagnostics
-        working-directory: ${{ env.XCODE_PROJECT_DIR }}
-        run: |
-          file ./usymtool
-          uname -m
-          xattr -l ./usymtool
-          # codesign -dv --verbose=4 ./usymtool
-          df -h
+
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
         run: |
@@ -68,9 +61,7 @@ jobs:
           else
             TARGET_ARG="-project ${SCHEME_NAME}.xcodeproj"
           fi
-          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
-          find . -name "usymtool*" -type f -exec chmod +x {} +
-          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
+          
           xcodebuild clean build \
             ${TARGET_ARG} \
             -scheme "${SCHEME_NAME}" \
@@ -81,7 +72,7 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             #| xcpretty
-          cat /Users/runner/work/_temp/DerivedData/Build/Intermediates.noindex/Unity-iPhone.build/Release-iphoneos/UnityFramework.build/Script-6E1E4F1B8F1F395756E8C231.sh
+          # cat /Users/runner/work/_temp/DerivedData/Build/Intermediates.noindex/Unity-iPhone.build/Release-iphoneos/UnityFramework.build/Script-6E1E4F1B8F1F395756E8C231.sh
 
       - name: Package Unsigned .app Payload
         run: |
