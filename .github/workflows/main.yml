@@ -61,7 +61,9 @@ jobs:
           else
             TARGET_ARG="-project ${SCHEME_NAME}.xcodeproj"
           fi
+          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
           find . -name "usymtool*" -type f -exec chmod +x {} +
+          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
           xcodebuild clean build \
             ${TARGET_ARG} \
             -scheme "${SCHEME_NAME}" \
