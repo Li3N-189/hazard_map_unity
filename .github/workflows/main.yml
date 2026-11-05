@@ -50,11 +50,11 @@ jobs:
             pod install --repo-update
           fi
           
-      - name: Debug Logging
+      - name: Change Mode
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
         run: |
-          grep -A 15 "Unity Process symbols for UnityFramework" Unity-iPhone.xcodeproj/project.pbxproj
-          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
+          chmod +x ./usymtool
+          find . -name "usymtool*" -type f -exec chmod +x {} +
           
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
