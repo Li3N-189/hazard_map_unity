@@ -55,7 +55,7 @@ jobs:
           file ./usymtool
           uname -m
           xattr -l ./usymtool
-          codesign -dv --verbose=4 ./usymtool
+          # codesign -dv --verbose=4 ./usymtool
           df -h
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
