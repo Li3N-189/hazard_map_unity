@@ -49,7 +49,14 @@ jobs:
           if [ -f "Podfile" ] && [ ! -d "Pods" ]; then
             pod install --repo-update
           fi
-          
+      - name: Diagnostics
+        working-directory: ${{ env.XCODE_PROJECT_DIR }}
+        run: |
+          file ./usymtool
+          uname -m
+          xattr -l ./usymtool
+          codesign -dv --verbose=4 ./usymtool
+          df -h
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
         run: |
