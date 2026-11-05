@@ -1,17 +1,88 @@
-name: CI
+# File: .github/workflows/ios-build-unsigned.yml
+name: iOS Xcode Build (Unsigned)
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  # エクスポートされたXcodeプロジェクトのルートディレクトリ（リポジトリルートにある場合は "."）
+  XCODE_PROJECT_DIR: "./unity_4"
+  # Unityのデフォルトスキーム名
+  SCHEME_NAME: "Unity-iPhone"
+  # ビルド構成 (Release / Debug / ReleaseForRunning / ReleaseForProfiling)
+  CONFIGURATION: "Release"
 
 jobs:
-  build:
-
+  build-ios:
+    name: Build Xcode Project on Latest macOS
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Select Xcode version
-      run: sudo xcode-select -s '/Applications/Xcode_26.2.app/Contents/Developer'
-    - name: Show Xcode version
-      run: xcodebuild -version
-    - name: Build
-      run: xcodebuild -sdk iphonesimulator -configuration Debug build 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Show Xcode Version
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes
+
+      - name: Cache CocoaPods
+        if: hashFiles(format('{0}/Podfile.lock', env.XCODE_PROJECT_DIR)) != ''
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.XCODE_PROJECT_DIR }}/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles(format('{0}/Podfile.lock', env.XCODE_PROJECT_DIR)) }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install CocoaPods Dependencies
+        working-directory: ${{ env.XCODE_PROJECT_DIR }}
+        run: |
+          if [ -f "Podfile" ] && [ ! -d "Pods" ]; then
+            pod install --repo-update
+          fi
+
+      - name: Build Xcode Project (No Code Sign)
+        working-directory: ${{ env.XCODE_PROJECT_DIR }}
+        run: |
+          set -eo pipefail
+          
+          # .xcworkspace の存在確認によるターゲット引数の動的決定
+          if [ -d "${SCHEME_NAME}.xcworkspace" ]; then
+            TARGET_ARG="-workspace ${SCHEME_NAME}.xcworkspace"
+          else
+            TARGET_ARG="-project ${SCHEME_NAME}.xcodeproj"
+          fi
+          
+          xcodebuild clean build \
+            ${TARGET_ARG} \
+            -scheme "${SCHEME_NAME}" \
+            -configuration "${CONFIGURATION}" \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath "${RUNNER_TEMP}/DerivedData" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            #| xcpretty
+          # cat /Users/runner/work/_temp/DerivedData/Build/Intermediates.noindex/Unity-iPhone.build/Release-iphoneos/UnityFramework.build/Script-6E1E4F1B8F1F395756E8C231.sh
+
+      - name: Package Unsigned .app Payload
+        run: |
+          APP_PATH=$(find "${RUNNER_TEMP}/DerivedData/Build/Products/${CONFIGURATION}-iphoneos" -name "*.app" -type d | head -n 1)
+          mkdir -p "${RUNNER_TEMP}/output"
+          cp -R "${APP_PATH}" "${RUNNER_TEMP}/output/"
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned-app
+          path: ${{ runner.temp }}/output/*.app
+          retention-days: 7
