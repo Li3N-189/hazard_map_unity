@@ -49,7 +49,13 @@ jobs:
           if [ -f "Podfile" ] && [ ! -d "Pods" ]; then
             pod install --repo-update
           fi
-
+          
+      - name: Debug Logging
+        working-directory: ${{ env.XCODE_PROJECT_DIR }}
+        run: |
+          grep -A 15 "Unity Process symbols for UnityFramework" Unity-iPhone.xcodeproj/project.pbxproj
+          find . -name "usymtool*" -exec ls -la {} + -exec file {} +
+          
       - name: Build Xcode Project (No Code Sign)
         working-directory: ${{ env.XCODE_PROJECT_DIR }}
         run: |
